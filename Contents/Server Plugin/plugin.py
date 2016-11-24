@@ -23,7 +23,7 @@ class Plugin(indigo.PluginBase):
         self.debug = not self.debug
         self.pluginPrefs["debug"] = self.debug
 
-    def _refreshStatese(self, dev, logRefresh):
+    def _refreshState(self, dev, logRefresh):
         # As an example here we update the current power (Watts) to a random
         # value, and we increase the kWh by a smidge.
         keyValueList = []
@@ -52,7 +52,7 @@ class Plugin(indigo.PluginBase):
                     # Plugins that need to poll out the status from the meter
                     # could do so here, then broadcast back the new values to the
                     # Indigo Server.
-                    self._refreshStatesFromHardware(dev, False)
+                    self._refreshState(dev, False)
                 self.sleep(2)
         except self.StopThread:
             pass  # Optionally catch the StopThread exception and do any needed cleanup.
@@ -77,7 +77,7 @@ class Plugin(indigo.PluginBase):
         elif action.deviceAction == indigo.kDeviceGeneralAction.EnergyUpdate:
             # Request hardware module (dev) for its most recent meter data here:
             # ** IMPLEMENT ME **
-            self._refreshStatesFromHardware(dev, True)
+            self._refreshState(dev, True)
 
         ###### ENERGY RESET ######
         elif action.deviceAction == indigo.kDeviceGeneralAction.EnergyReset:
@@ -92,7 +92,7 @@ class Plugin(indigo.PluginBase):
         elif action.deviceAction == indigo.kDeviceGeneralAction.RequestStatus:
             # Query hardware module (dev) for its current status here:
             # ** IMPLEMENT ME **
-            self._refreshStatesFromHardware(dev, True)
+            self._refreshState(dev, True)
 
     ########################################
     # Custom Plugin Action callbacks (defined in Actions.xml)
